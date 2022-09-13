@@ -20,6 +20,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     @Override
+    @Transactional
     public Long create(UserModel userModel) {
         User user = userMapper.dtoToEntity(userModel);
         return userRepository.save(user).getId();
