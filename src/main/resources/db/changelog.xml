@@ -3,4 +3,5 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
     <include file="changelog/create_init_tables.sql" relativeToChangelogFile="true"/>
+    <include file="changelog/v1/v1_001_alter_table_users_table.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>
