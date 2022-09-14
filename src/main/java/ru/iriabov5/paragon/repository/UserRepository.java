@@ -16,6 +16,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
               and modified_status_date + cast(5 || 'minutes' as interval) <= current_timestamp
                                     """,
             nativeQuery = true)
-    void updateStatusAfterTimeExpired();
-
+    int updateStatusAfterTimeExpired();
 }

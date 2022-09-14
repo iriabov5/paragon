@@ -1,6 +1,7 @@
 package ru.iriabov5.paragon.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,22 +18,29 @@ import ru.iriabov5.paragon.service.UserService;
 @RestController()
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
+@Slf4j
 public class UserController {
     private final UserService userService;
-    private final UserMapper userMapper;
 
     @GetMapping("/{id}")
     public UserModel getUserById(@PathVariable Long id) {
-        return userService.read(id);
+        UserModel userModel = userService.read(id);
+        log.info("User id%s :%s".formatted(id, userModel));
+        return userModel;
     }
 
     @PostMapping
     public Long addUser(@RequestBody UserModel userModel) {
-        return userService.create(userModel);
+        Long id = userService.create(userModel);
+        log.info("User id%s created: %s".formatted(id, userModel));
+        return id;
+
     }
 
     @PutMapping
     public Boolean updateStatus(@RequestParam Status status, @RequestParam Long id) {
-        return userService.updateStatus(status, id);
+        boolean isUpdated = userService.updateStatus(status, id);
+        log.info("User id%s updated: %s".formatted(id, isUpdated));
+        return isUpdated;
     }
 }
