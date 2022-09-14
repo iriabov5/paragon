@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import ru.iriabov5.paragon.exception.CreateUserException;
 import ru.iriabov5.paragon.exception.UpdateStatusException;
 import ru.iriabov5.paragon.exception.UserNotFoundException;
 import ru.iriabov5.paragon.model.ErrorMessageModel;
@@ -21,6 +22,14 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(UpdateStatusException.class)
     public ResponseEntity<ErrorMessageModel> handleException(UpdateStatusException e) {
+        String message = e.getMessage();
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorMessageModel(message));
+    }
+
+    @ExceptionHandler(CreateUserException.class)
+    public ResponseEntity<ErrorMessageModel> handleException(CreateUserException e) {
         String message = e.getMessage();
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)

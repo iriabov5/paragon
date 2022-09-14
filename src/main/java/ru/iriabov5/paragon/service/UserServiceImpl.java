@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.iriabov5.paragon.entity.Status;
 import ru.iriabov5.paragon.entity.User;
+import ru.iriabov5.paragon.exception.CreateUserException;
 import ru.iriabov5.paragon.exception.UpdateStatusException;
 import ru.iriabov5.paragon.exception.UserNotFoundException;
 import ru.iriabov5.paragon.mapper.UserMapper;
@@ -23,7 +24,11 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public Long create(UserModel userModel) {
         User user = userMapper.dtoToEntity(userModel);
-        return userRepository.save(user).getId();
+        try {
+            return userRepository.save(user).getId();
+        } catch (Exception e) {
+            throw new CreateUserException(e.getMessage());
+        }
     }
 
     @Override
